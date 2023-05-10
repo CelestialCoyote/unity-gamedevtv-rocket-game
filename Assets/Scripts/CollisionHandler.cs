@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 public class CollisionHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	void OnCollisionEnter(Collision other)
+	{
+		switch (other.gameObject.tag)
+		{
+			case "Friendly":
+				Debug.Log("This thing is friendly.");
+				break;
+			case "Finish":
+				Debug.Log("Congrats you finished the level.");
+				break;
+			case "Fuel":
+				Debug.Log("This thing is fuel.");
+				break;
+			default:
+				Debug.Log("This thing is bad. Try again.");
+				break;
+   		}
+	}
 }
