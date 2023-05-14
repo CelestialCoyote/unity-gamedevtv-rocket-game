@@ -35,18 +35,16 @@ public class Movement : MonoBehaviour
 			rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
 
 			if (!audioSource.isPlaying)
-			{
 				audioSource.PlayOneShot(mainEngine);
-			}
 
 			if (!mainEngineParticles.isPlaying)
-			{
 				mainEngineParticles.Play();
-			}
 		}
 		else
+		{
 			audioSource.Stop();
 			mainEngineParticles.Stop();
+		}
 	}
 
 	void ProcessRotation()
