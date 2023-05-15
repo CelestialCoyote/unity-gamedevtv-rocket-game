@@ -13,34 +13,50 @@ public class CollisionHandler : MonoBehaviour
 	AudioSource audioSource;
 
 	bool isTransitioning = false;
+	bool isCollisionDisabled = false;
 
 	void Start()
 	{
 		audioSource = GetComponent<AudioSource>();
 	}
 
+	void Update()
+	{
+		RespondToDebugKeys();
+	}
+
+	void RespondToDebugKeys()
+	{
+		if (Input.GetKeyDown(KeyCode.L))
+			LoadNextLevel();
+
+		else if (Input.GetKeyDown(KeyCode.C))
+		{
+			isCollisionDisabled = !isCollisionDisabled;
+		}
+	}
+
 	void OnCollisionEnter(Collision other)
 	{
-		if (isTransitioning) { return; }
+		if (isTransitioning || isCollisionDisabled) { return; }
 
 		switch (other.gameObject.tag)
-			{
-				case "Friendly":
-					Debug.Log("This thing is friendly.");
-					break;
-				case "Finish":
-					Debug.Log("Congrats you finished the level.");
-					StartSuccessSequence();
-					break;
-				case "Fuel":
-					Debug.Log("This thing is fuel.");
-					break;
-				default:
-					Debug.Log("This thing is bad. Try again.");
-					StartCrashSequence();
-					break;
-			}
-
+		{
+			case "Friendly":
+				Debug.Log("This thing is friendly.");
+				break;
+			case "Finish":
+				Debug.Log("Congrats you finished the level.");
+				StartSuccessSequence();
+				break;
+			case "Fuel":
+				Debug.Log("This thing is fuel.");
+				break;
+			default:
+				Debug.Log("This thing is bad. Try again.");
+				StartCrashSequence();
+				break;
+		}
 	}
 
 	void ReloadLevel()
